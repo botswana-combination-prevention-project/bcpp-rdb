@@ -110,9 +110,9 @@ DATABASES = {
         'OPTIONS': {
             'options': '-c search_path=dw'
         },
-        'USER': 'ew2789',
-        'PASSWORD': 'cc3721b$',
-        'HOST': '10.15.15.2',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'host.example.com',
         'PORT': '5432',
     },
 #     'default': {
