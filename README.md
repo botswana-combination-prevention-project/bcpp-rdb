@@ -4,3 +4,5 @@ Link EDC to PIMS data in the RDB.
 
 * PIMS: Patient Information Management System for the Ministry of Health in Botswana
 * RDB: "Research Database" where data is warehoused from the Botswana Combination Prevention Project (BCPP).
+
+A subset of PIMS data, less PII, is batch loaded into the RDB. 
