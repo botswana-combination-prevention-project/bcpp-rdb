@@ -115,27 +115,9 @@ DATABASES = {
         'HOST': 'host.example.com',
         'PORT': '5432',
     },
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'bhp066_master',
-#         'USER': 'root',
-#         'PASSWORD': 'cc3721b',
-#         'HOST': 'edc.bhp.org.bw',
-#         'PORT': '3306',
-#     }
 }
 DATABASE_ROUTERS = ['edc_pims.router.EdcPimsRouter']
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'gr',
-#         'USER': 'root',
-#         # 'PASSWORD': '',
-#         'HOST': '',
-#         'PORT': '',
-#     }
-# }
 
 
 # Internationalization
