@@ -2,7 +2,7 @@ import os
 # import sys
 
 # sys.path.append(os.path.expanduser('~/source/getresults-distribute'))
-# sys.path.append(os.path.expanduser('~/source/getresults-distribute/edc_pims'))
+# sys.path.append(os.path.expanduser('~/source/getresults-distribute/edc_rdb'))
 # sys.path.append(os.path.expanduser('~/.virtualenvs/django18/lib/python3.4/site-packages'))
 #
 # activate_env = os.path.join(os.path.expanduser('~/.virtualenvs/django18/bin/activate_this.py'))
@@ -11,7 +11,7 @@ import os
 #     code = compile(f.read(), activate_env, 'exec')
 #     exec(code, dict(__file__=activate_env))
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'edc_pims.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'edc_rdb.settings'
 
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()

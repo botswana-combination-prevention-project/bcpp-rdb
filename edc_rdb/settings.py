@@ -48,7 +48,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rdb',
-    'edc_pims',
+    'edc_rdb',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -62,7 +62,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'edc_pims.urls'
+ROOT_URLCONF = 'edc_rdb.urls'
 
 TEMPLATES = [
     {
@@ -82,7 +82,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'edc_pims.wsgi.application'
+WSGI_APPLICATION = 'edc_rdb.wsgi.application'
 
 
 # Database
@@ -98,7 +98,7 @@ WSGI_APPLICATION = 'edc_pims.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'edc_pims',
+        'NAME': 'edc_rdb',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': '',
@@ -124,7 +124,7 @@ DATABASES = {
 #         'PORT': '3306',
 #     }
 }
-DATABASE_ROUTERS = ['edc_pims.router.EdcPimsRouter']
+DATABASE_ROUTERS = ['edc_rdb.router.EdcPimsRouter']
 
 # DATABASES = {
 #     'default': {

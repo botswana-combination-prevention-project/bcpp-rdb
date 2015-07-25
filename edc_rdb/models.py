@@ -43,4 +43,4 @@ class PimsSummary(models.Model):
     updated = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        app_label = 'edc_pims'
+        app_label = 'edc_rdb'
