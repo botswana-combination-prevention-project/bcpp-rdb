@@ -8,7 +8,7 @@ Link EDC to data in the RDB. The RDB has research data plus PIMS data.
 A subset of PIMS data, less PII, is batch loaded into the RDB. 
 
 Current Objectives:
-- verify imported data against source
-- confirm some reported values against a second source
-- manage a master patient list
-- support other QA efforts
+- verify data imported into the RDB against source data in the EDC;
+- resolve ambiguous values reported in the EDC against a second source;
+- manage a master patient list relative to EDC enrolled subjects;
+- support other QA efforts.
