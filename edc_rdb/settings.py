@@ -23,6 +23,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 from unipath import Path
 
+from .private_settings import Rdb
+
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
 
@@ -110,14 +112,13 @@ DATABASES = {
         'OPTIONS': {
             'options': '-c search_path=dw'
         },
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'host.example.com',
-        'PORT': '5432',
+        'USER': Rdb.user,
+        'PASSWORD': Rdb.password,
+        'HOST': Rdb.host,
+        'PORT': Rdb.port,
     },
 }
 DATABASE_ROUTERS = ['edc_rdb.router.EdcPimsRouter']
-
 
 
 # Internationalization

@@ -36,3 +36,7 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls), name='admin'),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 )
+
+# urlpatterns = [
+#     url(r'^rdb/', AboutView.as_view()),
+# ]

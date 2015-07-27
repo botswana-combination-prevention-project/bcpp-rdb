@@ -9,7 +9,7 @@ class StudyParticipant(models.Model):
     )
 
     omang_hash = models.CharField(
-        max_length=36,
+        max_length=100,
         null=True,
         db_column='omangnumber')
 
@@ -235,3 +235,119 @@ class PimsHaartRegistration(models.Model):
         app_label = 'rdb'
         db_table = 'factpimsartpatientregistration'
         unique_together = (('dimclinickey', 'sourcesystempatientregistrationid'),)
+
+
+class CdcLabResults(models.Model):
+
+    id = models.IntegerField(
+        primary_key=True,
+        db_column='event_crf_id')
+
+    clinic_identifier = models.CharField(
+        max_length=25,
+        blank=True,
+        null=True,
+        db_column='ssid')
+
+    other_identifier = models.CharField(
+        max_length=25,
+        blank=True,
+        null=True,
+        db_column='oc_study_id')
+
+    cd4_requisition_datetime = models.DateTimeField(
+        blank=True,
+        null=True,
+        db_column='cd4vl_cd4dt')
+
+    cd4_result_datetime = models.DateTimeField(
+        blank=True,
+        null=True,
+        db_column='cd4vl_cd4rsltdt')
+
+    cd4_result = models.CharField(
+        max_length=25,
+        blank=True,
+        null=True,
+        db_column='cd4vl_cd4rslt')
+
+    vl_requisition_datetime = models.DateTimeField(
+        blank=True,
+        null=True,
+        db_column='cd4vl_vldt')
+
+    vl_result_datetime = models.DateTimeField(
+        blank=True,
+        null=True,
+        db_column='cd4vl_vlrsltdt')
+
+    vl_result = models.CharField(
+        max_length=25,
+        blank=True,
+        null=True,
+        db_column='cd4vl_vlrsltcpies')
+
+    visit_datetime = models.DateTimeField(
+        blank=True,
+        null=True,
+        db_column='visit_date')
+
+    event_name = models.CharField(
+        max_length=25,
+        blank=True,
+        null=True)
+    community = models.CharField(
+        max_length=25,
+        blank=True,
+        null=True,
+        db_column='study_name')
+
+    crf_name = models.CharField(max_length=25, blank=True, null=True)
+
+    date_created = models.DateTimeField(blank=True, null=True)
+    date_updated = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        app_label = 'rdb'
+        db_table = 'oc_crf_pims2_dcf_lab'
+
+
+class SmcParticipant(models.Model):
+
+    id = models.BigIntegerField(
+        primary_key=True,
+        db_column='dimsmcstudyparticipantkey')
+
+    omang_hash = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        db_column='omangnumber')
+
+    participant_id = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column='htcid',
+        help_text='Could be bhs, htc or nothing')
+
+    mergeid = models.CharField(max_length=50, blank=True, null=True)
+
+    passportnumber = models.CharField(max_length=50, blank=True, null=True)
+
+    dateofbirth = models.CharField(max_length=50, blank=True, null=True)
+    age = models.IntegerField(blank=True, null=True)
+    noage = models.CharField(max_length=50, blank=True, null=True)
+    effectivestartdate = models.DateTimeField(blank=True, null=True)
+    effectiveenddate = models.DateTimeField(blank=True, null=True)
+    rowversion = models.IntegerField(blank=True, null=True)
+    iscurrent = models.NullBooleanField()
+    createdate = models.DateTimeField(blank=True, null=True)
+    createuser = models.CharField(max_length=50, blank=True, null=True)
+    lastupdatedate = models.DateTimeField(blank=True, null=True)
+    lastupdateuser = models.CharField(max_length=50, blank=True, null=True)
+    dimauditkey = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dimsmcstudyparticipant'
