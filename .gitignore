@@ -5,6 +5,7 @@ __pycache__/
 .project
 .settings
 test-*
+private_settings*
 db.sqlite3
 etc/*
 getresults_dst/testdata/
