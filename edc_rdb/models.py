@@ -4,6 +4,10 @@ from django.utils import timezone
 
 class Subject(models.Model):
 
+    omang = models.CharField(
+        max_length=25,
+        null=True)
+
     omang_hash = models.CharField(
         max_length=100,
         null=True)
@@ -12,25 +16,25 @@ class Subject(models.Model):
         max_length=50,
         null=True)
 
-    bhs_datetime = models.DateTimeField(
-        null=True)
-
     htc_identifier = models.CharField(
         max_length=50,
-        null=True)
-
-    htc_datetime = models.DateTimeField(
         null=True)
 
     clinic_identifier = models.CharField(
         max_length=50,
         null=True)
 
-    clinic_datetime = models.DateTimeField(
-        null=True)
-
     smc_identifier = models.CharField(
         max_length=100,
+        null=True)
+
+    bhs_datetime = models.DateTimeField(
+        null=True)
+
+    htc_datetime = models.DateTimeField(
+        null=True)
+
+    clinic_datetime = models.DateTimeField(
         null=True)
 
     smc_datetime = models.DateTimeField(

@@ -4,6 +4,7 @@ __pycache__/
 .pydevproject
 .project
 .settings
+edc_rdb/migrations/*
 test-*
 private_settings*
 db.sqlite3

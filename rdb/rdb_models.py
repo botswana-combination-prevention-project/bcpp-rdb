@@ -2847,8 +2847,19 @@ class OcCrfCccEnrollment(models.Model):
     event_crf_id = models.IntegerField(blank=True, null=True)
     date_created = models.DateTimeField(blank=True, null=True)
     date_updated = models.DateTimeField(blank=True, null=True)
-    ssid = models.CharField(max_length=-1, blank=True, null=True)
-    oc_study_id = models.CharField(max_length=-1, blank=True, null=True)
+
+    clinic_identifier = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column='ssid')
+
+    bhs_identifier = models.CharField(
+        max_length=25,
+        blank=True,
+        null=True,
+        db_column='oc_study_id')
+
     crf_name = models.CharField(max_length=-1, blank=True, null=True)
     appt_date = models.DateTimeField(blank=True, null=True)
     art_adcounsl = models.CharField(max_length=-1, blank=True, null=True)

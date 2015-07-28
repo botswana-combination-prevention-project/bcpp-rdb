@@ -1,6 +1,6 @@
 
 
-class EdcPimsRouter(object):
+class EdcRdbRouter(object):
 
     def db_for_read(self, model, **hints):
         if model._meta.app_label == 'rdb':
@@ -13,6 +13,6 @@ class EdcPimsRouter(object):
         return None
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
-        if app_label == 'rdb':
-            return False
-        return None
+        if app_label in ['edc_rdb', 'auth']:
+            return True
+        return False

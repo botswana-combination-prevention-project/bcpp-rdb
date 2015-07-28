@@ -351,3 +351,120 @@ class SmcParticipant(models.Model):
     class Meta:
         managed = False
         db_table = 'dimsmcstudyparticipant'
+
+
+class OcCrfCccEnrollment(models.Model):
+
+    event_id = models.IntegerField(
+        primary_key=True
+    )
+
+    event_crf_id = models.IntegerField(blank=True, null=True)
+
+    date_created = models.DateTimeField(blank=True, null=True)
+
+    date_updated = models.DateTimeField(blank=True, null=True)
+
+    clinic_identifier = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column='ssid')
+
+    bhs_identifier = models.CharField(
+        max_length=25,
+        blank=True,
+        null=True,
+        db_column='oc_study_id')
+
+    appt_date = models.DateTimeField(
+        blank=True,
+        null=True)
+
+    study_identifier = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column='study_indentifier')
+
+    class Meta:
+        managed = False
+        db_table = 'oc_crf_ccc_enrollment'
+
+
+class OcCrfEtcEnrollment(models.Model):
+
+    event_id = models.IntegerField(
+        primary_key=True
+    )
+
+    event_crf_id = models.IntegerField(blank=True, null=True)
+
+    date_created = models.DateTimeField(blank=True, null=True)
+
+    date_updated = models.DateTimeField(blank=True, null=True)
+
+    clinic_identifier = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column='ssid')
+
+    bhs_identifier = models.CharField(
+        max_length=25,
+        blank=True,
+        null=True,
+        db_column='oc_study_id')
+
+    appt_date = models.DateTimeField(
+        blank=True,
+        null=True)
+
+    study_identifier = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column='study_indentifier')
+
+    class Meta:
+        managed = False
+        db_table = 'oc_crf_etc_enrollment'
+
+
+class OcCrfRefusal(models.Model):
+
+    event_id = models.IntegerField(
+        primary_key=True
+    )
+
+    event_crf_id = models.IntegerField(blank=True, null=True)
+
+    date_created = models.DateTimeField(blank=True, null=True)
+
+    date_updated = models.DateTimeField(blank=True, null=True)
+
+    clinic_identifier = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column='ssid')
+
+    bhs_identifier = models.CharField(
+        max_length=25,
+        blank=True,
+        null=True,
+        db_column='oc_study_id')
+
+    appt_date = models.DateTimeField(
+        blank=True,
+        null=True)
+
+    study_identifier = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column='study_indentifier')
+
+    class Meta:
+        managed = False
+        db_table = 'oc_crf_refusal'

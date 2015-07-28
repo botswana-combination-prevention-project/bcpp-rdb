@@ -21,6 +21,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
+
 from unipath import Path
 
 from .private_settings import Rdb
@@ -90,35 +92,36 @@ WSGI_APPLICATION = 'edc_rdb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'edc_rdb',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '',
-        'PORT': '',
-    },
-    'ResearchDB': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ResearchDB',
-        'OPTIONS': {
-            'options': '-c search_path=dw'
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'edc_rdb',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': '',
+            'PORT': '',
         },
-        'USER': Rdb.user,
-        'PASSWORD': Rdb.password,
-        'HOST': Rdb.host,
-        'PORT': Rdb.port,
-    },
-}
-DATABASE_ROUTERS = ['edc_rdb.router.EdcPimsRouter']
+        'ResearchDB': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'ResearchDB',
+            'OPTIONS': {
+                'options': '-c search_path=dw'
+            },
+            'USER': Rdb.user,
+            'PASSWORD': Rdb.password,
+            'HOST': Rdb.host,
+            'PORT': Rdb.port,
+        },
+    }
+    DATABASE_ROUTERS = ['edc_rdb.router.EdcRdbRouter']
 
 
 # Internationalization
