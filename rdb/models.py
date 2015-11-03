@@ -3,7 +3,7 @@ from django.db import models
 
 class StudyParticipant(models.Model):
 
-    study_participant = models.IntegerField(
+    id = models.IntegerField(
         primary_key=True,
         db_column='dimcommonstudyparticipantkey'
     )
@@ -22,7 +22,7 @@ class StudyParticipant(models.Model):
         db_column='htcid')
 
     def __str__(self):
-        return '({})'.format(', '.join((self.bhs_identifier, self.htc_identifier, str(self.study_participant))))
+        return '({})'.format(', '.join((self.bhs_identifier, self.htc_identifier, str(self.id))))
 
     class Meta:
         app_label = 'rdb'
@@ -37,7 +37,6 @@ class BhsParticipant(models.Model):
 
     study_participant = models.ForeignKey(
         to=StudyParticipant,
-        to_field='study_participant',
         db_column='dimcommonstudyparticipantkey'
     )
 
@@ -60,7 +59,7 @@ class BhsParticipant(models.Model):
 
 class HtcParticipant(models.Model):
 
-    study_participant = models.IntegerField(
+    id = models.BigIntegerField(
         primary_key=True,
         db_column='dimcurrentstudyparticipantkey')
 
@@ -95,10 +94,10 @@ class PimsPatient(models.Model):
 
     id = models.IntegerField(
         primary_key=True,
-        db_column='dimpimspatientkey')
+        db_column='dimcurrentpimspatientkey')
 
-    omang_hash = models.CharField(
-        max_length=36,
+    omang_hash = models.TextField(
+        max_length=1000,
         db_column='idno')
 
     gender = models.CharField(
@@ -139,7 +138,7 @@ class PimsPatient(models.Model):
 
     class Meta:
         app_label = 'rdb'
-        db_table = 'dimpimspatient'
+        db_table = 'dimcurrentpimspatient'
 
 
 class PimsHaartRegimen(models.Model):
@@ -179,7 +178,6 @@ class PimsHaartInitiation(models.Model):
 
     study_participant = models.ForeignKey(
         to=StudyParticipant,
-        to_field='study_participant',
         db_column='dimcommonstudyparticipantkey'
     )
 
@@ -214,8 +212,8 @@ class PimsHaartRegistration(models.Model):
         primary_key=True,
         db_column='factpimsartpatientregistrationkey')
 
-    study_participant = models.IntegerField(
-        null=True,
+    study_participant = models.ForeignKey(
+        to=StudyParticipant,
         db_column='dimcommonstudyparticipantkey'
     )
 
@@ -353,7 +351,7 @@ class SmcParticipant(models.Model):
         db_table = 'dimsmcstudyparticipant'
 
 
-class OcCrfCccEnrollment(models.Model):
+class EnrollmentCcc(models.Model):
 
     event_id = models.IntegerField(
         primary_key=True
@@ -392,7 +390,7 @@ class OcCrfCccEnrollment(models.Model):
         db_table = 'oc_crf_ccc_enrollment'
 
 
-class OcCrfEtcEnrollment(models.Model):
+class EnrollmentEcc(models.Model):
 
     event_id = models.IntegerField(
         primary_key=True
@@ -431,7 +429,7 @@ class OcCrfEtcEnrollment(models.Model):
         db_table = 'oc_crf_etc_enrollment'
 
 
-class OcCrfRefusal(models.Model):
+class EnrollmentLossCc(models.Model):
 
     event_id = models.IntegerField(
         primary_key=True
@@ -468,3 +466,184 @@ class OcCrfRefusal(models.Model):
     class Meta:
         managed = False
         db_table = 'oc_crf_refusal'
+
+
+class LabTest(models.Model):
+
+    id = models.BigIntegerField(
+        primary_key=True,
+        db_column='dimcurrentpimslabtestkey'
+    )
+
+    clinic_name = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column='pimsclinicname'
+    )
+
+    test_name = models.CharField(
+        max_length=25,
+        blank=True,
+        null=True,
+        db_column='labtest'
+    )
+
+    labtestunit = models.CharField(
+        max_length=50, blank=True, null=True
+    )
+
+    standardunit = models.IntegerField(
+        blank=True, null=True
+    )
+
+    effectivestartdate = models.DateTimeField(blank=True, null=True)
+    effectiveenddate = models.DateTimeField(blank=True, null=True)
+    rowversion = models.IntegerField(blank=True, null=True)
+    iscurrent = models.NullBooleanField()
+    createdate = models.DateTimeField(blank=True, null=True)
+    createuser = models.CharField(max_length=50, blank=True, null=True)
+    lastupdatedate = models.DateTimeField(blank=True, null=True)
+    lastupdateuser = models.CharField(max_length=50, blank=True, null=True)
+    dimauditkey = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dimcurrentpimslabtest'
+
+
+class PimsOrder(models.Model):
+    """PIMS laboratory test orders and the order status."""
+
+    id = models.BigIntegerField(
+        primary_key=True,
+        db_column='dimcurrentpimslaborderprofilekey'
+    )
+
+    clinic_name = models.CharField(
+        max_length=50, blank=True, null=True,
+        db_column='pimsclinicname'
+    )
+
+    order_identifier = models.IntegerField(
+        blank=True,
+        null=True,
+        db_column='laborderno'
+    )
+
+    order_datetime = models.DateTimeField(
+        blank=True,
+        null=True,
+        db_column='laborderdate')
+
+    test_name = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column='labprofile'
+    )
+
+    sample_datetime = models.DateTimeField(
+        blank=True,
+        null=True,
+        db_column='sampledate',
+    )
+
+    status = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column='testoutcome'
+    )
+
+    testing_facility = models.CharField(
+        max_length=50, blank=True, null=True, db_column='testingfacility'
+    )
+
+    external_specimen_no = models.CharField(
+        max_length=50, blank=True, null=True, db_column='externalspecimenno'
+    )
+
+    testingfacilityid = models.IntegerField(blank=True, null=True)
+    effectivestartdate = models.DateTimeField(blank=True, null=True)
+    effectiveenddate = models.DateTimeField(blank=True, null=True)
+    rowversion = models.IntegerField(blank=True, null=True)
+    iscurrent = models.NullBooleanField()
+    createdate = models.DateTimeField(blank=True, null=True)
+    createuser = models.CharField(max_length=50, blank=True, null=True)
+    lastupdatedate = models.DateTimeField(blank=True, null=True)
+    lastupdateuser = models.CharField(max_length=50, blank=True, null=True)
+    dimauditkey = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dimcurrentpimslaborderprofile'
+
+
+class PimsLab(models.Model):
+
+    id = models.BigIntegerField(
+        primary_key=True,
+        db_column='factpimslaborderprofiletestkey'
+    )
+
+    pims_order = models.ForeignKey(
+        to=PimsOrder,
+        db_column='dimcurrentpimslaborderprofilekey'
+    )
+
+    study_participant = models.ForeignKey(
+        to=StudyParticipant,
+        db_column='dimcommonstudyparticipantkey'
+    )
+
+    pims_patient = models.ForeignKey(
+        to=PimsPatient,
+        db_column='dimcurrentpimspatientkey')
+
+    sample_datekey = models.IntegerField(
+        blank=True,
+        null=True,
+        db_column='sampledatekey'
+    )
+
+    specimen_datekey = models.IntegerField(
+        blank=True,
+        null=True,
+        db_column='specimendatekey'
+    )
+
+    result_datekey = models.IntegerField(
+        blank=True,
+        null=True,
+        db_column='resultdatekey'
+    )
+
+    result_qualifier = models.CharField(
+        max_length=25,
+        blank=True,
+        null=True,
+        db_column='resultqualifier'
+    )
+
+    result = models.DecimalField(
+        max_digits=24,
+        decimal_places=3,
+        blank=True,
+        null=True
+    )
+
+    sourcesystemlaborderprofiletestid = models.IntegerField(blank=True, null=True)
+    dimclinickey = models.BigIntegerField(blank=True, null=True)
+    effectivestartdate = models.DateTimeField(blank=True, null=True)
+    effectiveenddate = models.DateTimeField(blank=True, null=True)
+    iscurrent = models.NullBooleanField()
+    rowversion = models.IntegerField(blank=True, null=True)
+    createdate = models.DateTimeField(blank=True, null=True)
+    createuser = models.DateTimeField(blank=True, null=True)
+    dimauditkey = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'factpimslaborderprofiletest'
+        unique_together = (('dimclinickey', 'sourcesystemlaborderprofiletestid'),)

@@ -7,8 +7,8 @@ from rdb.models import CdcLabResults
 @admin.register(StudyParticipant)
 class StudyParticipantAdmin(admin.ModelAdmin):
 
-    list_display = ('study_participant', 'bhs_identifier', 'htc_identifier', 'omang_hash')
-    search_fields = ('study_participant', 'bhs_identifier', 'htc_identifier', 'omang_hash')
+    list_display = ('bhs_identifier', 'htc_identifier', 'omang_hash')
+    search_fields = ('bhs_identifier', 'htc_identifier', 'omang_hash')
 
 
 @admin.register(BhsParticipant)
@@ -24,8 +24,8 @@ class BhsParticipantAdmin(admin.ModelAdmin):
 @admin.register(HtcParticipant)
 class HtcParticipantAdmin(admin.ModelAdmin):
 
-    list_display = ('study_participant', 'htc_identifier', 'age', 'gender', 'omang_hash')
-    search_fields = ('study_participant', 'htc_identifier', 'omang_hash')
+    list_display = ('id', 'htc_identifier', 'age', 'gender', 'omang_hash')
+    search_fields = ('is', 'htc_identifier', 'omang_hash')
 
 
 @admin.register(PimsPatient)

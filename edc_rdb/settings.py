@@ -25,7 +25,7 @@ import sys
 
 from unipath import Path
 
-from .private_settings import Rdb
+from .private_settings import Rdb, Edc
 
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rdb',
+    'bcpp',
     'edc_rdb',
 )
 
@@ -106,8 +107,8 @@ else:
             'NAME': 'edc_rdb',
             'USER': 'postgres',
             'PASSWORD': 'postgres',
-            'HOST': '',
-            'PORT': '',
+            'HOST': 'localhost',
+            'PORT': '5432',
         },
         'ResearchDB': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -119,6 +120,17 @@ else:
             'PASSWORD': Rdb.password,
             'HOST': Rdb.host,
             'PORT': Rdb.port,
+        },
+        'edc': {
+            'ENGINE': 'django.db.backends.mysql',
+            'OPTIONS': {
+                'init_command': 'SET storage_engine=INNODB',
+            },
+            'NAME': Edc.name,
+            'USER': Edc.user,
+            'PASSWORD': Edc.password,
+            'HOST': Edc.host,
+            'PORT': Edc.port,
         },
     }
     DATABASE_ROUTERS = ['edc_rdb.router.EdcRdbRouter']

@@ -894,18 +894,32 @@ class Dimcurrentpimsfacility(models.Model):
 
 
 class Dimcurrentpimslaborderprofile(models.Model):
-    dimcurrentpimslaborderprofilekey = models.BigIntegerField(blank=True, null=True)
-    pimsclinicname = models.CharField(max_length=-1, blank=True, null=True)
+    """PIMS laboratory test orders and the order status."""
+    id = models.BigIntegerField(
+        primary_key=True,
+        blank=True,
+        null=True,
+        db_column='dimcurrentpimslaborderprofilekey'
+    )
+
+    pimsclinicname = models.CharField(
+        max_length=-1, blank=True, null=True
+    )
+
     sourcesystemlaborderprofileid = models.IntegerField(blank=True, null=True)
     sourcesystemlaborderid = models.IntegerField(blank=True, null=True)
     sourcesystempatientid = models.IntegerField(blank=True, null=True)
+
     laborderno = models.IntegerField(blank=True, null=True)
+
     laborderdate = models.DateTimeField(blank=True, null=True)
     requestingfacilityid = models.IntegerField(blank=True, null=True)
     requestingfacility = models.CharField(max_length=-1, blank=True, null=True)
     requesterid = models.IntegerField(blank=True, null=True)
     requestername = models.CharField(max_length=-1, blank=True, null=True)
-    sampledate = models.DateTimeField(blank=True, null=True)
+    sampledate = models.DateTimeField(
+        blank=True, null=True
+    )
     laborderstatusid = models.IntegerField(blank=True, null=True)
     laborderstatus = models.CharField(max_length=-1, blank=True, null=True)
     notes = models.CharField(max_length=-1, blank=True, null=True)
@@ -942,7 +956,12 @@ class Dimcurrentpimslaborderprofile(models.Model):
 
 
 class Dimcurrentpimslabtest(models.Model):
-    dimcurrentpimslabtestkey = models.BigIntegerField(blank=True, null=True)
+    """Lab test results"""
+    dimcurrentpimslabtestkey = models.BigIntegerField(
+        blank=True,
+        null=True,
+        db_column='dimcurrentpimslabtestkey')
+
     pimsclinicname = models.CharField(max_length=-1, blank=True, null=True)
     sourcesystemlabtestid = models.IntegerField(blank=True, null=True)
     labtest = models.CharField(max_length=-1, blank=True, null=True)
@@ -1000,7 +1019,10 @@ class Dimcurrentpimsmedicine(models.Model):
 
 
 class Dimcurrentpimspatient(models.Model):
-    dimcurrentpimspatientkey = models.BigIntegerField(unique=True, blank=True, null=True)
+    id = models.IntegerField(
+        primary_key=True,
+        db_column='dimcurrentpimspatientkey')
+    # dimcurrentpimspatientkey = models.BigIntegerField(unique=True, blank=True, null=True)
     sourcesystempatientid = models.IntegerField(blank=True, null=True)
     pimsclinicname = models.CharField(max_length=-1, blank=True, null=True)
     idno = models.CharField(max_length=-1, blank=True, null=True)
@@ -1505,7 +1527,10 @@ class Dimpimsfacility(models.Model):
 
 
 class Dimpimshaartinitiation(models.Model):
-    dimpimshaartinitiationkey = models.BigIntegerField(unique=True, blank=True, null=True)
+    id = models.IntegerField(
+        primary_key=True,
+        db_column='dimpimshaartinitiationkey')
+    # dimpimshaartinitiationkey = models.BigIntegerField(unique=True, blank=True, null=True)
     primaryinitiation = models.NullBooleanField()
     regimenlineid = models.IntegerField(blank=True, null=True)
     regimenline = models.CharField(max_length=-1, blank=True, null=True)
@@ -2336,7 +2361,11 @@ class Factpimshaarteligibility(models.Model):
 
 
 class Factpimshaartinitiation(models.Model):
-    factpimshaartinitiationkey = models.BigIntegerField(blank=True, null=True)
+    id = models.IntegerField(
+        primary_key=True,
+        db_column='factpimshaartinitiationkey')
+    
+    # factpimshaartinitiationkey = models.BigIntegerField(blank=True, null=True)
     dimclinickey = models.BigIntegerField(blank=True, null=True)
     dimpimshaartinitiationkey = models.BigIntegerField(blank=True, null=True)
     dimpimspatientkey = models.BigIntegerField(blank=True, null=True)
@@ -2391,8 +2420,11 @@ class Factpimshivtest(models.Model):
 
 
 class Factpimslaborderprofiletest(models.Model):
+
     factpimslaborderprofiletestkey = models.BigIntegerField(blank=True, null=True)
-    dimclinickey = models.BigIntegerField(blank=True, null=True)
+    dimclinickey = models.BigIntegerField(
+        blank=True, null=True
+    )
     dimcurrentpimslaborderprofilekey = models.BigIntegerField(blank=True, null=True)
     currentrequestingfacilitykey = models.BigIntegerField(blank=True, null=True)
     currenttestinglaboratorykey = models.BigIntegerField(blank=True, null=True)
@@ -2401,7 +2433,11 @@ class Factpimslaborderprofiletest(models.Model):
     currentphlebotomistkey = models.BigIntegerField(blank=True, null=True)
     currentlabtestkey = models.BigIntegerField(blank=True, null=True)
     dimpimspatientkey = models.BigIntegerField(blank=True, null=True)
-    dimcurrentpimspatientkey = models.BigIntegerField(blank=True, null=True)
+
+    dimcurrentpimspatientkey = models.BigIntegerField(
+        blank=True,
+        null=True)
+
     dimcommonstudyparticipantkey = models.BigIntegerField(blank=True, null=True)
     dimpimslaborderprofilekey = models.BigIntegerField(blank=True, null=True)
     requestingfacilitykey = models.BigIntegerField(blank=True, null=True)

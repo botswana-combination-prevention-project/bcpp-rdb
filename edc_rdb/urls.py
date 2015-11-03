@@ -27,7 +27,11 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.views.generic import RedirectView
+from tastypie.api import Api
+from bcpp.api import SubjectConsentResource
 
+api = Api(api_name='v1')
+api.register(SubjectConsentResource())
 admin.autodiscover()
 
 urlpatterns = patterns(
@@ -35,6 +39,7 @@ urlpatterns = patterns(
     url(r'^$', RedirectView.as_view(url='admin/')),
     url(r'^admin/', include(admin.site.urls), name='admin'),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    url(r'^api/', include(api.urls)),
 )
 
 # urlpatterns = [
