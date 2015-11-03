@@ -11,4 +11,5 @@ Current Objectives:
 - verify data imported into the RDB against source data in the EDC;
 - resolve ambiguous values reported in the EDC against a second source;
 - manage a master patient list relative to EDC enrolled subjects;
+- trace linkage-to-care flow by subject;
 - support other QA efforts.
