@@ -1,5 +1,96 @@
 from django.db import models
 from django.utils import timezone
+from uuid import uuid4
+
+
+STATUS = (
+    ('success', 'Success'),
+    ('fail', 'Fail'),
+)
+
+
+class FileFormat(models.Model):
+
+    header = models.TextField()
+
+    name = models.CharField(
+        max_length=50,
+        default=uuid4,
+        unique=True
+    )
+
+    identity_field = models.CharField(
+        max_length=50,
+    )
+
+    description = models.CharField(
+        max_length=50,
+        null=True,
+    )
+
+    class Meta:
+        app_label = 'edc_rdb'
+
+
+class ImportHistory(models.Model):
+
+    session = models.CharField(max_length=50)
+
+    filename = models.CharField(max_length=50)
+
+    user = models.CharField(max_length=50)
+
+    source = models.CharField(
+        max_length=50,
+        null=True,
+    )
+
+    records = models.IntegerField(null=True)
+
+    file_format = models.ForeignKey(FileFormat, null=True)
+
+    status = models.CharField(max_length=15, choices=STATUS)
+
+    description = models.CharField(
+        max_length=100,
+    )
+
+    message = models.CharField(max_length=500, null=True)
+
+    created = models.DateTimeField(
+        default=timezone.now,
+        editable=False)
+
+    class Meta:
+        app_label = 'edc_rdb'
+        verbose_name_plural = 'Import History'
+
+
+class ImportedData(models.Model):
+
+    json = models.TextField()
+
+    file_format = models.ForeignKey(FileFormat)
+
+    omang_hash = models.CharField(
+        max_length=100,
+    )
+
+    source = models.CharField(
+        max_length=50,
+        null=True,
+    )
+
+    import_history = models.ForeignKey(ImportHistory)
+
+    created = models.DateTimeField(
+        default=timezone.now)
+
+    updated = models.DateTimeField(
+        default=timezone.now)
+
+    class Meta:
+        app_label = 'edc_rdb'
 
 
 class BaseModel(models.Model):
@@ -111,6 +202,7 @@ class BaseSubject(BaseModel):
         null=True)
 
     gender = models.CharField(
+        choices=(('M', 'Male'), ('F', 'Female')),
         max_length=50)
 
     dob = models.DateField(
@@ -193,6 +285,9 @@ class BhsSubject(BaseSubject):
         null=True,
         help_text='from SubjectRequisition. Datetime of viral load drawn.',
     )
+
+    def get_absolute_url(self):
+        return '/bhssubject/{}/'.format(self.id)
 
     class Meta:
         app_label = 'edc_rdb'
@@ -450,3 +545,42 @@ class PimsSummary(models.Model):
 
     class Meta:
         app_label = 'edc_rdb'
+
+
+class Patient(models.Model):
+
+    subject_identifier = models.CharField(max_length=25)
+
+    gender = models.CharField(
+        max_length=25)
+
+    dob = models.DateField(
+        null=True)
+
+    art_status = models.CharField(
+        max_length=25,
+        null=True)
+
+    clinic = models.CharField(
+        max_length=25,
+        null=True)
+
+    citizen = models.CharField(
+        max_length=25,
+        null=True)
+
+    htc_identifier = models.CharField(
+        max_length=25,
+        null=True)
+
+    clinic_identifier = models.CharField(
+        max_length=25,
+        null=True)
+
+    smc_identifier = models.CharField(
+        max_length=25,
+        null=True)
+
+    omang_hash = models.CharField(
+        max_length=50,
+        null=True)

@@ -1,12 +1,18 @@
+import json
+import csv
 import factory
+import os
+import hashlib
 
 from faker import Factory as FakerFactory
 from dateutil.relativedelta import relativedelta
 from datetime import datetime, date
 from django.test import TestCase
 from django.db import models
+from django.conf import settings
 from collections import OrderedDict
 from edc_rdb.pims_reference import func_str, BaseReference, DuplicateKeyError
+from edc_rdb.models import ImportedData, Format
 
 faker = FakerFactory.create()
 
@@ -131,3 +137,20 @@ class TestReference(TestCase):
         keys = [k for k in reference.data.keys()]
         keys.sort()
         self.assertEqual(keys, [str(n) for n in range(0, 10)])
+
+    def test_load_dump(self):
+        with open(os.path.join(settings.BASE_DIR.ancestor(1), 'data', 'ipms_20151105.csv')) as f:
+            reader = csv.reader(f)
+            header = next(reader)
+            print(header)
+            try:
+                frmt = Format.objects.get(header=[','.join(header)])
+            except Format.DoesNotExist:
+                frmt = Format.objects.create(header=[','.join(header)], identity_field='IDNo')
+            for row in reader:
+                obj = dict(zip(header, row))
+                omang = obj[format.identity_field]
+                ImportedData.objects.create(
+                    format=frmt,
+                    omang_hash=str(hashlib.sha256(omang.encode()).hexdigest()),
+                    json=json.dumps(obj))

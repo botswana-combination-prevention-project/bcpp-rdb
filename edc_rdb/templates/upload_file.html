@@ -1,0 +1,31 @@
+{% extends "home.html" %}
+{% load crispy_forms_tags %}
+
+{% block main %}
+
+    <div class="container">
+      <div class="listview">
+        <h1>{{ page_title }}</h1>
+	{% if success %}
+        <p class="lead">Imported {{ records }} records. Your reference is <A href="">{{ session }}</A>.<BR>Click <a href="{% url 'upload' %}"> here </a> to upload another file.</p>
+	{% elif failed %}
+		    <p class="lead ">File failed to upload. The error message was "{{ failed }}". The file header fields are {{ header_fields }}.<BR><BR>Click <a href="{% url 'upload' %}"> here</a>  to correct or try another file.</p>
+	{% else %}
+		<div class="row">
+			<div class="col-md-6">
+			<p class="lead">Click browse to select the file to upload.</p>
+
+			{% crispy form %}
+
+			</div>
+			<div class="col-md-6">
+			<p class="lead">My Recent Uploads</p>
+				<div class="table-responsive">
+  				{{ datatable }}
+				</div>
+			</div>
+		</div>	
+      </div>
+	{% endif %}
+    </div><!-- /.container -->
+{% endblock%}

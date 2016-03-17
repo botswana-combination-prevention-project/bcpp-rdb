@@ -43,10 +43,11 @@ class BaseReference:
     additional_fields = []
     exclude_fields_on_export = []
 
-    def __init__(self, subjects, key_field=None, verbose=None):
+    def __init__(self, subjects, key_field=None, verbose=None, log_path=None):
         self.data = {}
         self.errmsg = None
         self.verbose = verbose
+        self.log_path = log_path
         self.key_field = key_field or next(iter(self.sources['default']))
         self.validate_sources()
         try:
@@ -142,6 +143,11 @@ class BaseReference:
             self.errmsg = 'not found in {}'.format(source_name)
         return self.errmsg
 
+    def sql_to_file(self, obj):
+        if self.log_path:
+            with open(os.path.expanduser(self.log_path), 'a') as f:
+                f.write(str(obj.query))
+
     def export_as_csv(self, path, exclude_fields_on_export=None):
         exclude_fields_on_export = exclude_fields_on_export or self.exclude_fields_on_export
         with open(os.path.expanduser(path), 'w') as f:
@@ -231,6 +237,8 @@ class PimsReference(BaseReference):
     def get_dimcurrentpimspatient(self, **kwargs):
         try:
             obj = Dimcurrentpimspatient.objects.get(idno=kwargs.get('omang_hash'))
+            if self.log_path:
+                self.sql_to_file(Dimcurrentpimspatient.objects.filter(idno=kwargs.get('omang_hash')))
         except ObjectDoesNotExist:
             obj = None
             self.update_errmsg('Dimcurrentpimspatient')
@@ -238,20 +246,32 @@ class PimsReference(BaseReference):
 
     def get_factpimshaartinitiation(self, **kwargs):
         try:
-            obj = Factpimshaartinitiation.objects.get(
-                dimcurrentpimspatientkey=kwargs.get('dimcurrentpimspatient').id)
+            options = dict(
+                dimcurrentpimspatientkey=kwargs.get('dimcurrentpimspatient').id,
+                iscurrent=True)
+        except AttributeError:
+            self.update_errmsg('Factpimshaartinitiation')
+            return None
+        try:
+            obj = Factpimshaartinitiation.objects.get(**options)
+            if self.log_path:
+                self.sql_to_file(Factpimshaartinitiation.objects.filter(**options))
         except MultipleObjectsReturned:
-            obj = Factpimshaartinitiation.objects.filter(
-                dimcurrentpimspatientkey=kwargs.get('dimcurrentpimspatient').id)[0]
-        except (AttributeError, ObjectDoesNotExist):
+            obj = Factpimshaartinitiation.objects.filter(**options)
+            if self.log_path:
+                self.sql_to_file(obj)
+            obj = obj[0]
+        except ObjectDoesNotExist:
             obj = None
             self.update_errmsg('Factpimshaartinitiation')
         return obj
 
     def get_dimpimshaartinitiation(self, **kwargs):
         try:
-            obj = Dimpimshaartinitiation.objects.get(
-                id=kwargs.get('factpimshaartinitiation').dimpimshaartinitiationkey)
+            options = dict(id=kwargs.get('factpimshaartinitiation').dimpimshaartinitiationkey)
+            obj = Dimpimshaartinitiation.objects.get(**options)
+            if self.log_path:
+                self.sql_to_file(Dimpimshaartinitiation.objects.filter(**options))
         except (AttributeError, ObjectDoesNotExist):
             obj = None
             self.update_errmsg('Dimpimshaartinitiation')

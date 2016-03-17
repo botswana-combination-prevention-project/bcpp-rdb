@@ -51,8 +51,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'datatableview',
+    'edc_bootstrap',
     'rdb',
     'bcpp',
+    'moh',
     'edc_rdb',
 )
 
@@ -175,3 +179,14 @@ STATICFILES_FINDERS = (
 )
 
 GIT_DIR = BASE_DIR.ancestor(1)
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+PROJECT_TITLE = 'Edc: Extra Data'
+APP_NAME = 'edc_rdb'
+
+DEVICE_ID = '99'
+SERVER_DEVICE_ID_LIST = ['99']
+MIDDLEMAN_DEVICE_ID_LIST = ['98']
+FIELD_MAX_LENGTH='default'
+IS_SECURE_DEVICE = True
+CURRENT_COMMUNITY = 'test_community'
+LIMIT_EDIT_TO_CURRENT_COMMUNITY = False
