@@ -51,13 +51,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
-    'datatableview',
-    'edc_bootstrap',
     'rdb',
-    'bcpp',
     'moh',
-    'edc_rdb',
+    'bcpp_rdb',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -134,7 +130,7 @@ else:
             'HOST': Rdb.host,
             'PORT': Rdb.port,
         },
-        'edc': {
+        'bhp066': {
             'ENGINE': 'django.db.backends.mysql',
             'OPTIONS': {
                 'init_command': 'SET storage_engine=INNODB',
@@ -146,7 +142,7 @@ else:
             'PORT': Edc.port,
         },
     }
-    DATABASE_ROUTERS = ['edc_rdb.router.EdcRdbRouter']
+    DATABASE_ROUTERS = ['bcpp_rdb.router.EdcRdbRouter']
 
 
 # Internationalization
@@ -183,10 +179,35 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 PROJECT_TITLE = 'Edc: Extra Data'
 APP_NAME = 'edc_rdb'
 
-DEVICE_ID = '99'
+# DEVICE_ID = '99'
+# SERVER_DEVICE_ID_LIST = ['99']
+# MIDDLEMAN_DEVICE_ID_LIST = ['98']
+# FIELD_MAX_LENGTH='default'
+# IS_SECURE_DEVICE = True
+# CURRENT_COMMUNITY = 'test_community'
+# LIMIT_EDIT_TO_CURRENT_COMMUNITY = False
+
 SERVER_DEVICE_ID_LIST = ['99']
-MIDDLEMAN_DEVICE_ID_LIST = ['98']
-FIELD_MAX_LENGTH='default'
+MIDDLEMAN_DEVICE_ID_LIST = []
+PROJECT_ROOT = BASE_DIR.ancestor(1)
+FIELD_MAX_LENGTH = 'default'
 IS_SECURE_DEVICE = True
-CURRENT_COMMUNITY = 'test_community'
+KEY_PATH = '/Volumes/bhp066/live_keys'  # BASE_DIR.ancestor(1)
+KEY_PREFIX = 'user'
+ALLOW_MODEL_SERIALIZATION = True
+MAX_SUBJECTS = 0
+
+ADMIN_EXCLUDE_DEFAULT_CODE = 'T0'
+CURRENT_COMMUNITY = 'bhp'
+CURRENT_COMMUNITY_CHECK = False
+CURRENT_MAPPER = CURRENT_COMMUNITY
+CURRENT_SURVEY = 'bcpp-year-1'
+DEVICE_ID = '99'
+GPS_DEVICE = '/Volumes/GARMIN/'
+GPS_FILE_NAME = '/Volumes/GARMIN/GPX/temp.gpx'
+GPX_TEMPLATE = None
+SITE_CODE = '00'
+VERIFY_GPS = False
+VERIFY_GPS_LOCATION = False
+VERIFY_PLOT_COMMUNITY_WITH_CURRENT_MAPPER = False
 LIMIT_EDIT_TO_CURRENT_COMMUNITY = False
