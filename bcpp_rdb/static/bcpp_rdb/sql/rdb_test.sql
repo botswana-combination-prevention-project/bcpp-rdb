@@ -1,0 +1,1 @@
+select count(*) as patients from dw.dimcurrentpimspatient

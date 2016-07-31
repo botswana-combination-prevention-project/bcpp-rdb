@@ -1,17 +1,16 @@
+"""
+WSGI config for x project.
+
+It exposes the WSGI callable as a module-level variable named ``application``.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/1.9/howto/deployment/wsgi/
+"""
+
 import os
-# import sys
-
-# sys.path.append(os.path.expanduser('~/source/getresults-distribute'))
-# sys.path.append(os.path.expanduser('~/source/getresults-distribute/edc_rdb'))
-# sys.path.append(os.path.expanduser('~/.virtualenvs/django18/lib/python3.4/site-packages'))
-#
-# activate_env = os.path.join(os.path.expanduser('~/.virtualenvs/django18/bin/activate_this.py'))
-#
-# with open(activate_env) as f:
-#     code = compile(f.read(), activate_env, 'exec')
-#     exec(code, dict(__file__=activate_env))
-
-os.environ['DJANGO_SETTINGS_MODULE'] = 'edc_rdb.settings'
 
 from django.core.wsgi import get_wsgi_application
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bcpp_rdb.settings")
+
 application = get_wsgi_application()

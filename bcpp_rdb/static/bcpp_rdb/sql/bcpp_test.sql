@@ -1,0 +1,1 @@
+select count(*) as subjects from bcpp_subject_subjectconsent

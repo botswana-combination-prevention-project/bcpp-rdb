@@ -5,42 +5,49 @@ import pandas as pd
 from datetime import datetime
 from sqlalchemy import create_engine
 
-from .private_settings import Rdb
+from bcpp_rdb.private_settings import Rdb
+
+# Rdb.host = '127.0.0.1:5000'
 
 
 class Pims(object):
 
-    def __init__(self, path=None, timeout=None):
+    def __init__(self, path=None, timeout=None, host=None, port=None):
         self._df_pims = pd.DataFrame()
-        self.path = path or os.path.expanduser('~/Documents/bcpp/')
-        self.engine = create_engine('postgresql://{user}:{password}@{host}/{db}'.format(
-            user=Rdb.user, password=Rdb.password, host=Rdb.host, db=Rdb.name),
-            connect_args={'connect_timeout': timeout or 60})
+        self.path = path or os.path.expanduser('~/Documents/bcpp/pims/')
+        if timeout:
+            connect_args = {'connect_timeout': timeout}
+        else:
+            connect_args = {}
+        self.engine = create_engine('postgresql://{user}:{password}@{host}:{port}/{db}'.format(
+            user=Rdb.user, password=Rdb.password, host=host or Rdb.host, db=Rdb.name, port=port or Rdb.port),
+            connect_args=connect_args)
 
     def update_pg_tables(self):
         for name in self.pg_table_names:
             self.pg_table_to_csv(name)
 
+    @property
     def pg_table_names(self):
         return [
-            'dimcommonstudyparticipant',
-            'dimcurrentpimspatient',
-            'dimpimsappointmentvisit'
+            #'dimcommonstudyparticipant',
+            #'dimcurrentpimspatient',
+            #'dimpimsappointmentvisit',
             'factpimshivtest',
-            'factpimsartpatientregistration',
-            'factpimshaarteligibility',
-            'factpimshaartinitiation',
-            'factpimshaartreinitiation',
+            #'factpimsartpatientregistration',
+            #'factpimshaarteligibility',
+            #'factpimshaartinitiation',
+            #'factpimshaartreinitiation',
         ]
 
     def pg_table_to_csv(self, name):
         with self.engine.connect() as conn, conn.begin():
             df = pd.read_sql_query('select * from dw.{}'.format(name), conn)
-        df.to_csv(os.path.expanduser('~/{}.csv'.format(name)))
+        df.to_csv(os.path.expanduser('~/{}.csv'.format(name)), index=False)
         return df
 
     def load_pg_table_from_csv(self, pg_table_name, csv_filename=None):
-        filename = csv_filename or '{}.csv'.format(pg_table_name)
+        filename = csv_filename or os.path.join(self.path, '{}.csv'.format(pg_table_name))
         df = pd.read_csv(
             os.path.join(self.path, filename),
             low_memory=False)

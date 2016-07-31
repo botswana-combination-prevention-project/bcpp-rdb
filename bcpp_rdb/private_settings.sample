@@ -1,0 +1,27 @@
+class Rdb(object):
+    """
+    may require an ssh tunnel to cdc server, for example:
+        ssh -f django@getresults.bhp.org.bw -L5000:10.15.15.2:5432 -N
+    """
+    connection_name = 'rdb'
+    engine = 'pg'
+    user = 'user'
+    password = 'password'
+    host = '127.0.0.1'
+    port = 5000
+    dbname = 'ResearchDB'
+    schema = 'dw'
+
+
+class Edc(object):
+    """
+    may require an ssh tunnel to edc.bhp.org.bw, for example:
+        ssh -f django@edc.bhp.org.bw -L5001:localhost:3306 -N
+    """
+    connection_name = 'bcpp'
+    engine = 'mysql'
+    user = 'user'
+    password = 'password'
+    host = '127.0.0.1'
+    port = 5001
+    dbname = 'bhp066_master'

@@ -1,0 +1,2 @@
+recursive-include bcpp_rdb/templates *
+recursive-include bcpp_rdb/static *

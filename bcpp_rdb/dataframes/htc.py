@@ -2,11 +2,12 @@ import os
 import numpy as np
 import pandas as pd
 
-from bcpp_export.communities import communities, intervention
-from bcpp_export.constants import YES, NO
 from django.conf import settings
 from sqlalchemy import create_engine
 from tabulate import tabulate
+
+from bcpp_export.communities import communities, intervention
+from bcpp_export.constants import YES, NO
 
 from .private_settings import Rdb
 

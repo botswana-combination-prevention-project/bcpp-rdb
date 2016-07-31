@@ -1,13 +1,15 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+media/*
+static/*
 .pydevproject
 .project
 .settings
 edc_rdb/migrations/*
 data/*
 test-*
-private_settings*
+private_settings.py
 db.sqlite3
 etc/*
 getresults_dst/testdata/

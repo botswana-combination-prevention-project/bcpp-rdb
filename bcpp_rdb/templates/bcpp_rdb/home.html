@@ -1,0 +1,124 @@
+{% extends 'edc_base/base.html' %}
+
+{% load staticfiles %}
+
+{% block extra-scripts %}
+{{ block.super }}
+<script type="text/javascript" charset="utf8" class="init" src="{% static "bcpp_rdb/js/bcpp_rdb.js" %}"></script>
+{% endblock extra-scripts %} 
+
+{% block main %}
+
+<div class="container">
+    <div id="div-home-left" class="col-md-8">
+        <div class="panel-group">
+          <div class="panel panel-success">
+            <div class="panel-heading">Files available for download<span id="id-refresh-all" class="fa fa-refresh fa-1x fa-fw pull-right"></span></div>
+
+              <div class="panel-body">
+                {% for file_item_name, file_item in file_items.items %}
+                <div class="panel panel-default">
+                  <div class="panel-heading">{{ file_item.verbose_name }} <a title="update {{ file_item.verbose_name }} only" id="id-link-refresh-{{ file_item.name }}" class="fa fa-refresh fa-1x fa-fw pull-right" href=""></a></span></div>
+                    <div id="id-fetch-data-{{ file_item.name }}" class="alert" style="display:none"><span id="id-alert-text-{{ file_item.name }}"></span><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>
+                    <ul id="id-nav-pill-resources" class="nav nav-pills nav-stacked">
+                      <li><a id="id-current_file-{{ file_item.name }}" title="Click to download" class="btn btn-default" href="{{ upload_url }}{{ file_item.current_file.filename }}">Download <span id="id-current-file-last-updated-{{ file_item.name }}">{{ file_item.current_file.timestamp }}</span></a></li>
+                      <li><a title="Click to view list of files" class="btn btn-default" data-toggle="collapse" href="#collapse-archived-csv-{{ file_item.name }}">Download archived<span class="caret pull-right"></span></a></li>
+                    </ul>
+                    <div id="collapse-archived-csv-{{ file_item.name }}" class="panel-collapse collapse">
+                      <ul id="id-nav-pill-resources" class="nav nav-pills nav-stacked">
+                      {% for fname, archived_file in file_item.archived_files.items %}
+                        <li><a id="id-archived_file-{{ file_item.name }}" title="Click to download" class="btn btn-default" href="{{ upload_url }}{{ archived_file.filename }}">{{ archived_file.timestamp }} ({{ archived_file.filename }})</a></li>
+                      {% endfor %}
+                      </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+              <div class="panel-body">
+                {% for file_item_name, file_item in static_file_items.items %}
+                <div class="panel panel-default">
+                  <div class="panel-heading">{{ file_item.verbose_name }}</div>
+                    <ul id="id-nav-pill-resources" class="nav nav-pills nav-stacked">
+                      <li><a id="id-current_file-{{ file_item.name }}" title="Click to download" class="btn btn-default" href="{{ upload_url }}{{ file_item.current_file.filename }}">Download <span id="id-current-file-last-updated-{{ file_item.name }}">{{ file_item.current_file.timestamp }}</span></a></li>
+                      <li><a title="Click to view list of files" class="btn btn-default" data-toggle="collapse" href="#collapse-archived-csv-{{ file_item.name }}">Download archived<span class="caret pull-right"></span></a></li>
+                    </ul>
+                    <div id="collapse-archived-csv-{{ file_item.name }}" class="panel-collapse collapse">
+                      <ul id="id-nav-pill-resources" class="nav nav-pills nav-stacked">
+                      {% for fname, archived_file in file_item.archived_files.items %}
+                        <li><a id="id-archived_file-{{ file_item.name }}" title="Click to download" class="btn btn-default" href="{{ upload_url }}{{ archived_file.filename }}">{{ archived_file.timestamp }} ({{ archived_file.filename }})</a></li>
+                      {% endfor %}
+                      </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+          </div>
+      </div>
+    </div><!--div-home-left -->
+
+    <div id="div-home-right" class="col-md-4">
+        <div class="panel panel-warning">
+            <div class="panel-heading">Administration</div>
+
+              <div class="panel-body">
+                {% for file_item_name, file_item in test_file_items.items %}
+                <div class="panel panel-default">
+                  <div class="panel-heading">{{ file_item.verbose_name }}  <span class="pull-right"><a title="update {{ file_item.verbose_name }} only" id="id-link-refresh-{{ file_item.name }}" class="fa fa-refresh fa-1x fa-fw pull-right" href=""></a></span></div>
+                    <div id="id-fetch-data-{{ file_item.name }}" class="alert" style="display:none"><span id="id-alert-text-{{ file_item.name }}"></span><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>
+                    <ul id="id-nav-pill-resources" class="nav nav-pills nav-stacked">
+                      <li><a id="id-current_file-{{ file_item.name }}" title="Click to download" class="btn btn-default" href="{{ upload_url }}{{ file_item.current_file.filename }}">Download <span id="id-current-file-last-updated-{{ file_item.name }}">{{ file_item.current_file.timestamp }}</span></a></li>
+                    </ul>
+                </div>
+                {% endfor %}
+
+                <ul id="id-nav-pill-resources" class="nav nav-pills nav-stacked">
+                <li><a class="btn btn-default" data-toggle="collapse" href="#id-collapse-connections">View Connections<span class="caret pull-right"></span></a></li>
+                </ul>
+              <div id="id-collapse-connections" class="panel-collapse collapse">
+                  {% for name, connection in connections.items %}
+                    <div class="panel-body">
+                      <table class="table table-condensed responsive">
+                      <tr><th>name</th><td>{{ connection.name }}</td></tr> 
+                      <tr><th>host</th><td>{{ connection.host }}:{{ connection.port }}</td></tr> 
+                      <tr><th>database</th><td>{{ connection.dbname }}</td></tr> 
+                      </table>
+                    </div>
+                  {% endfor %}
+              </div>
+
+                <ul id="id-nav-pill-resources" class="nav nav-pills nav-stacked">
+                <li><a class="btn btn-default" data-toggle="collapse" href="#id-collapse-all-file-items">View File Items<span class="caret pull-right"></span></a></li>
+                </ul>
+              <div id="id-collapse-all-file-items" class="panel-collapse collapse">
+                  {% for category, file_items in all_file_items.items %}
+                    <div class="panel-body">
+                      <table class="table table-condensed responsive">
+                        {% for label, file_item in file_items.items %}
+                            <tr><th colspan=2>{{ file_item.verbose_name }}</th></tr> 
+                            <tr><td>name</td><td>{{ label }} {{ file_item.name }}</td></tr> 
+                            <tr><td>category</td><td>{{ file_item.category }}</td></tr> 
+                        {% endfor %}
+                      </table>
+                    </div>
+                  {% endfor %}
+              </div>
+
+        </div>
+    </div><!--div-home-right -->
+
+</div>
+{% endblock main %}
+
+{% block extra-scripts-bottom %}
+{{ block.super }}
+
+<script type="text/javascript" charset="utf8" class="init">
+    $(document).ready( function() { 
+        bcppRdbHomeReady('{{ context|escapejs }}');
+    });
+
+</script>
+
+{% endblock extra-scripts-bottom %}
