@@ -11,6 +11,7 @@ function bcppRdbHomeReady( context ) {
     //         };
     //     };
     // });
+    $('[data-toggle="tooltip"]').tooltip();
     $.each( djContext.file_items, function( key ) {
       $( '#id-link-refresh-' + djContext.file_items[key].name ).click( function (e) {
         e.preventDefault();

@@ -5,13 +5,13 @@ import pytz
 
 from datetime import datetime
 from django.conf import settings
-from django.views.generic.base import TemplateView
-
-from edc_base.views.edc_base_view_mixin import EdcBaseViewMixin
-
-from .mixins import FileItemsMixin, AsyncMixin, DataframeMixin, get_statinfo
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.views.generic.base import TemplateView
+
+from edc_base.view_mixins import EdcBaseViewMixin
+
+from .mixins import FileItemsMixin, AsyncMixin, DataframeMixin, get_statinfo
 
 tz = pytz.timezone(settings.TIME_ZONE)
 
@@ -63,7 +63,7 @@ class HomeView(EdcBaseViewMixin, FileItemsMixin, AsyncMixin, QueryMixin, Templat
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(EdcBaseViewMixin, self).dispatch(*args, **kwargs)
+        return super(HomeView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         self.add_file_item('pims_haart', 'PIMS Haart data')
@@ -72,14 +72,14 @@ class HomeView(EdcBaseViewMixin, FileItemsMixin, AsyncMixin, QueryMixin, Templat
         self.add_test_file_item('bcpp_test', 'BCPP Test')
         self.add_test_file_item('rdb_test', 'RDB Test')
         self.add_static_file_item('bcpp_rdb_key', 'BCPP/RDB Subject Key')
-        context = super().get_context_data(**kwargs)
+        context = super(HomeView, self).get_context_data(**kwargs)
         context.update({
-            'file_items': self.file_items,
-            'test_file_items': self.test_file_items,
-            'static_file_items': self.static_file_items,
-            'upload_url': settings.UPLOAD_URL,
+            'all_file_items': self.all_file_items,
             'connections': self.db_connections,
-            'all_file_items': self.all_file_items
+            'file_items': self.file_items,
+            'static_file_items': self.static_file_items,
+            'test_file_items': self.test_file_items,
+            'upload_url': settings.UPLOAD_URL,
         })
         dj_context = copy.copy(context)
         del dj_context['view']

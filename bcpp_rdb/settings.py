@@ -25,7 +25,7 @@ SECRET_KEY = 't*6u^&wb7clc31n%y!92dt%h5%+2^vjsjj@8@61fprqt05kzgu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#ALLOWED_HOSTS = ['localhost']
+# ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -37,12 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_crypto_fields.apps.DjangoCryptoFieldsAppConfig',
+    'django_crypto_fields.apps.AppConfig',
     'django_revision.apps.AppConfig',
     'django_js_reverse',
     'simple_history',
     'crispy_forms',
-    'edc_base',
+    'edc_base.apps.AppConfig',
     'bcpp_rdb.apps.AppConfig',
 ]
 

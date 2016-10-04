@@ -87,3 +87,47 @@ clinic = {
     '20': 'sebina',
     '21': 'mathangwane',
     '22': 'mandunyane'}
+
+
+htc_communities_map = {
+    'Bokaa': 'bokaa',
+    'Digawana': 'digawana',
+    'Gumare': 'gumare',
+    'Gweta': 'gweta',
+    'Lentswelatau': 'lentswelatau',
+    'Lentsweletau': 'lentsweletau',
+    'Lerala': 'lerala',
+    'Letlhakeng': 'letlhakeng',
+    'Lorwana': 'digawana',
+    'Mandunyane': 'mandunyane',
+    'Masunga': 'masunga',
+    'Mathangwane': 'mathangwane',
+    'Maunatlala': 'maunatlala',
+    'Metsimotlhabe': 'metsimotlhabe',
+    'Mmadinare': 'mmadinare',
+    'Mmankgodi': 'mmankgodi',
+    'Mmathethe': 'mmathethe',
+    'Molapowabojang': 'molapowabojang',
+    'Nata': 'nata',
+    'Nkange': 'nkange',
+    'Oodi': 'oodi',
+    'Otse': 'otse',
+    'Rakops': 'rakops',
+    'Ramokgonami': 'ramokgonami',
+    'Ranaka': 'ranaka',
+    'Sebina': 'sebina',
+    'Sefhare': 'sefhare',
+    'Sefophe': 'sefophe',
+    'Shakawe': 'shakawe',
+    'Shoshong': 'shoshong',
+    'Tati Siding': 'tati_siding',
+    'Tsetsebjwe': 'tsetsebjwe',
+}
+
+
+def community(community):
+    community = str(community).strip()
+    try:
+        return htc_communities_map[community]
+    except (KeyError):
+        return community
