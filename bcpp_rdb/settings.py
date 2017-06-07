@@ -11,9 +11,9 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-from unipath import Path
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ..
-BASE_DIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'django_crypto_fields.apps.AppConfig',
     'django_revision.apps.AppConfig',
     'django_js_reverse',
+    'tz_detect',
     'simple_history',
     'crispy_forms',
     'edc_base.apps.AppConfig',
+    'edc_device.apps.AppConfig',
     'bcpp_rdb.apps.AppConfig',
 ]
 

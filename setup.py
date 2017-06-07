@@ -22,7 +22,8 @@ setup(
     long_description=README,
     zip_safe=False,
     keywords='django edc pims',
-    install_requires=['Django'],
+    install_requires=[
+        'Django', 'psycopg2', 'pandas', 'sqlalchemy'],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',

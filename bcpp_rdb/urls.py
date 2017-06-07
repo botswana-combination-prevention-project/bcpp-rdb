@@ -19,5 +19,6 @@ urlpatterns = [
     url(r'^admin/', crypto_fields_admin.urls),
     url(r'^admin/', admin.site.urls),
     url(r'^home/', HomeView.as_view(), name='home_url'),
+    url(r'^tz_detect/', include('tz_detect.urls')),
     url(r'^', HomeView.as_view(), name='home_url'),
 ]
