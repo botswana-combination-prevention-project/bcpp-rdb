@@ -49,7 +49,8 @@ class FileItemsMixin:
             archived_files=self.archived_files(item_name))
 
     def add_static_file_item(self, item_name, item_verbose_name):
-        """Return a dict. These file items are not updateable."""
+        """Return a dict. These file items are not updateable.
+        """
         self.static_file_items[item_name] = dict(
             name=item_name,
             verbose_name=item_verbose_name,

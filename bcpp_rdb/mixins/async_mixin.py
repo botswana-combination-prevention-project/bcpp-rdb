@@ -27,7 +27,7 @@ class AsyncMixin:
             for task_name, future in futures.items():
                 task_response_data[task_name] = future.result()
             loop.close()
-            print(task_response_data)
+            # print(task_response_data)
             return HttpResponse(json.dumps(task_response_data), content_type='application/json')
         return self.render_to_response(context)
 
@@ -36,9 +36,11 @@ class AsyncMixin:
         future.set_result(self.async_task(task_name))
 
     def async_task(self, name):
-        """Override."""
+        """Override.
+        """
         return {}
 
     def async_tasks(self, task_name=None):
-        """Override."""
+        """Override.
+        """
         return {}

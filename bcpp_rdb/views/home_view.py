@@ -42,11 +42,11 @@ class HomeView(EdcBaseViewMixin, FileItemsMixin, AsyncMixin, QueryMixin, Templat
             'test_file_items': self.test_file_items,
             'upload_url': settings.UPLOAD_URL,
         })
-        context.pop('navbar')
-        context.pop('navbar_item_selected')
 
         dj_context = copy.copy(context)
-        del dj_context['view']
+        dj_context.pop('view')
+        dj_context.pop('navbar')
+        dj_context.pop('navbar_item_selected')
         context.update({'context': json.dumps(dj_context)})
         return context
 

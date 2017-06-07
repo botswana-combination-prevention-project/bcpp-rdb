@@ -25,12 +25,13 @@ class QueryMixin(DataframeMixin):
         return dataframe
 
     def csv_filename(self, filename_prefix):
-        return '{}_{}.csv'.format(
-            filename_prefix, tz.localize(
-                datetime.today()).isoformat(sep='-').replace('.', '').replace(':', '').replace('+', ''))
+        timestamp = tz.localize(
+            datetime.today()).isoformat(sep='-').replace('.', '').replace(':', '').replace('+', '')
+        return f'{filename_prefix}_{timestamp}.csv'
 
     def query_parameters(self, name):
-        """Return a dict with connection_name and sql."""
+        """Return a dict with connection_name and sql.
+        """
         if name == 'pims_haart':
             with open(os.path.join(settings.STATIC_ROOT, 'bcpp_rdb', 'sql', 'pims_haart.sql'), 'r') as f:
                 query_parameters = {'sql': f.read(), 'connection_name': 'rdb'}
