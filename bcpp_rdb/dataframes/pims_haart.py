@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-from bcpp_rdb.mixins import RdbConnectionMixin
+from ..mixins import RdbConnectionMixin
 
 # Rdb.host = '127.0.0.1:5000'
 

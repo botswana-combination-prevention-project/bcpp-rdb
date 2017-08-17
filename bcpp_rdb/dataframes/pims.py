@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime
 from sqlalchemy import create_engine
 
-from bcpp_rdb.private_settings import Rdb
+from ..private_settings import Rdb
 
 # Rdb.host = '127.0.0.1:5000'
 
@@ -47,7 +47,8 @@ class Pims(object):
         return df
 
     def load_pg_table_from_csv(self, pg_table_name, csv_filename=None):
-        filename = csv_filename or os.path.join(self.path, '{}.csv'.format(pg_table_name))
+        filename = csv_filename or os.path.join(
+            self.path, '{}.csv'.format(pg_table_name))
         df = pd.read_csv(
             os.path.join(self.path, filename),
             low_memory=False)
@@ -59,7 +60,8 @@ class Pims(object):
         and filters for citizens between 16-64 years old."""
         if self._df_pims.empty:
             df = pd.read_csv(
-                os.path.expanduser('/Users/erikvw/Documents/bcpp/dimcurrentpimspatient.csv'),
+                os.path.expanduser(
+                    '/Users/erikvw/Documents/bcpp/dimcurrentpimspatient.csv'),
                 low_memory=False)
             df.rename(columns={'idno': 'identity256'}, inplace=True)
             # calculate age
